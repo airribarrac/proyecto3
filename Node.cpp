@@ -1,7 +1,12 @@
 #include "Node.h"
 
-Node::Node(string str){
+Node::Node(string str,int ind){
 	name=str;
+	index=ind;
+}
+
+int Node::getIndex(){
+	return index;
 }
 
 string Node::getName(){
@@ -14,6 +19,14 @@ vector<Node*>* Node::getIn(){
 
 vector<Node*>* Node::getOut(){
 	return out;
+}
+
+void Node::addIn(Node *a){
+	in->push_back(a);
+}
+
+void Node::addOut(Node *a){
+	out->push_back(a);
 }
 
 int Node::outDeg(){
