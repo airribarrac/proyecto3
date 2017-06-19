@@ -4,6 +4,7 @@
 class Node{
 public:
 	Node(string,int);
+	~Node();
 	string getName();
 	vector<Node*>* getIn();
 	vector<Node*>* getOut();

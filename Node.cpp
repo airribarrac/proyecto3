@@ -7,6 +7,11 @@ Node::Node(string str,int ind){
 	out=new vector<Node*>();
 }
 
+Node::~Node(){
+	delete in;
+	delete out;
+}
+
 int Node::getIndex(){
 	return index;
 }

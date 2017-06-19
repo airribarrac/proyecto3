@@ -55,4 +55,19 @@ Node* diGraph::dfs2(string u,Node *a,vector<bool> &visited){
 		}
 	}
 	return res;
+}	
+
+bool find(string s){
+	Node *v=dfs1(s);
+	cout<<(v!=NULL?"Yes":"No")<<endl;
+	return v!=NULL;
+}
+
+void follow(int n){
+	priority_queue<pair<int,pair<int,string> > pq;
+	for(int i=0;i<ver.size();i++){
+		Node *a=ver[i];
+		pq.push(make_pair(a->outDeg(),make_pair(-a->inDeg(),a->getName())));
+	}
+
 }
