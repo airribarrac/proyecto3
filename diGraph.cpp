@@ -6,6 +6,7 @@ diGraph::diGraph(){
 
 }
 
+//agrega arista desde u hasta v
 void diGraph::add(string u,string v){
 	Node *uu=dfs1(u);
 	Node *vv=dfs1(v);
@@ -16,7 +17,6 @@ void diGraph::add(string u,string v){
 		vv=new Node(v,ver.size());
 	}
 }
-
 
 //retorna puntero a nodo que coincide
 Node* diGraph::dfs1(string u){

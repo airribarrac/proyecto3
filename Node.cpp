@@ -3,6 +3,8 @@
 Node::Node(string str,int ind){
 	name=str;
 	index=ind;
+	in=new vector<Node*>();
+	out=new vector<Node*>();
 }
 
 int Node::getIndex(){
