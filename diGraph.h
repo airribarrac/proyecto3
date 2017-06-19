@@ -4,16 +4,20 @@
 #include "diGraphADT.h"
 #include <vector>
 
+using namespace std;
+
 class diGraph: public diGraphADT{
 public:
-	void add(string,string)=0;
-	bool find(string)=0;
-	void clique()=0;
-	void compact()=0;
-	void follow()=0;
+	diGraph();
+	void add(string,string);
+	bool find(string);
+	void clique();
+	void compact();
+	void follow();
 private:
-	vector<vector<int> > in,out;
-	
+	Node* dfs1(string);				//retorna nodo con el string
+	Node* dfs2(string,Node*,vector<bool> &visited);
+	vector<Node*> ver;
 };
 
 #endif
