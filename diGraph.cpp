@@ -69,5 +69,9 @@ void follow(int n){
 		Node *a=ver[i];
 		pq.push(make_pair(a->outDeg(),make_pair(-a->inDeg(),a->getName())));
 	}
-
+	for(int i=0;i<n;i++){
+		string str=pq.top().second.second;
+		pq.pop();
+		cout<<str<<endl;
+	}
 }
