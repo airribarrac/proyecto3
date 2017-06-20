@@ -1,6 +1,11 @@
 #ifndef NODE
 #define NODE
 
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
 class Node{
 public:
 	Node(string,int);

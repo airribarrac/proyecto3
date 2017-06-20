@@ -3,6 +3,8 @@
 
 #include "diGraphADT.h"
 #include <vector>
+#include <iostream>
+#include "Node.h"
 
 using namespace std;
 
@@ -13,7 +15,7 @@ public:
 	bool find(string);
 	void clique();
 	void compact();
-	void follow();
+	void follow(int);
 private:
 	Node* dfs1(string);				//retorna nodo con el string
 	Node* dfs2(string,Node*,vector<bool> &visited);

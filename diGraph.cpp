@@ -12,10 +12,14 @@ void diGraph::add(string u,string v){
 	Node *vv=dfs1(v);
 	if(uu==NULL){
 		uu=new Node(u,ver.size());
+		ver.push_back(uu);
 	}
 	if(vv==NULL){
 		vv=new Node(v,ver.size());
+		ver.push_back(vv);
 	}
+	uu->addIn(vv);
+	vv->addOut(uu);
 }
 
 //retorna puntero a nodo que coincide
@@ -42,10 +46,10 @@ Node* diGraph::dfs2(string u,Node *a,vector<bool> &visited){
 	Node *res=NULL;
 	int ind=a->getIndex();
 	visited[ind]=true;
-	vector<Node*> adj=a->getOut();
+	vector<Node*> *adj=a->getOut();
 	for(int i=0;i<adj->size();i++){
-		Node *b=adj[i];
-		int ind2=b->getIndex;
+		Node *b=(*adj)[i];
+		int ind2=b->getIndex();
 		if(!visited[ind2]){	
 			Node *aux=dfs2(u,b,visited);
 			res=aux!=NULL?aux:res;
@@ -57,14 +61,22 @@ Node* diGraph::dfs2(string u,Node *a,vector<bool> &visited){
 	return res;
 }	
 
-bool find(string s){
+void diGraph::clique(){
+	cout<<"sin implementar"<<endl;
+}
+
+void diGraph::compact(){
+	cout<<"sin implementar"<<endl;
+}
+
+bool diGraph::find(string s){
 	Node *v=dfs1(s);
 	cout<<(v!=NULL?"Yes":"No")<<endl;
 	return v!=NULL;
 }
 
-void follow(int n){
-	priority_queue<pair<int,pair<int,string> > pq;
+void diGraph::follow(int n){
+	priority_queue<pair<int,pair<int,string> > > pq;
 	for(int i=0;i<ver.size();i++){
 		Node *a=ver[i];
 		pq.push(make_pair(a->outDeg(),make_pair(-a->inDeg(),a->getName())));
