@@ -1,6 +1,10 @@
 #include "diGraph.h"
 #include <queue>
+#include <vector>
+
 using namespace std;
+
+typedef vector<bool> vb;
 
 diGraph::diGraph(){
 
@@ -87,3 +91,45 @@ void diGraph::follow(int n){
 		cout<<str<<endl;
 	}
 }
+
+vb diGraph::set_union(vb &a,vb &b){
+	vb res(a.size());
+	for(int i=0;i<a.size();i++){
+		res[i]=a[i]||b[i];
+	}
+	return res;
+}
+
+vb diGraph::set_inter(vb &a,vb &b){
+	vb res(a.size());
+	for(int i=0;i<a.size();i++){
+		res[i]=a[i]&&b[i];
+	}
+	return res;
+}
+
+vb diGraph::set_subst(vb &a,vb &b){
+	vb res(a.size());
+	for(int i=0;i<a.size();i++){
+		res[i]=a[i]&&!b[i];
+	}
+	return res;
+}
+
+vb diGraph::neighbors(int n){
+	Node *node=ver[n];
+	vb res(ver.size(),false);
+	vector<Node*> *in=node->getIn();
+	vector<Node*> *out=node->getOut();
+	//se consideran vecinos los que entran y salen a la vez
+	for(int i=0;i<in->size();i++){
+		for(int j=0;j<out->size();j++){
+			if((*in)[i]==(*out)[j]){
+				res[(*in)[i]->getIndex()]=true;
+			}
+		}
+	}
+	return res;
+}
+
+void BK(vb R,vb P,vb X);
