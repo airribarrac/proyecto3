@@ -14,7 +14,7 @@ public:
 	void compact();
 	void follow();
 private:
-	map<string,int> nodes;
+	map<string,bool> nodes;
 };
 
 #endif

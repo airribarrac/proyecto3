@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include "Node.h"
+#include <map>
 
 using namespace std;
 
@@ -14,13 +15,16 @@ class diGraph: public diGraphADT{
 public:
 	diGraph();
 	void add(string,string);
-	bool find(string);
+	void find(string);
 	void clique();
 	void compact();
 	void follow(int);
 private:
 	Node* dfs1(string);				//retorna nodo con el string
 	Node* dfs2(string,Node*,vector<bool> &visited);
+	bool find1(string s);
+	bool find2(string s);
+	map<string,bool> nodes;
 	vector<Node*> ver;
 	vector<vb> cliques;
 	void BK(vb R,vb P,vb X);

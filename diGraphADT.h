@@ -8,7 +8,7 @@ using namespace std;
 class diGraphADT{
 public:
 	virtual void add(string,string)=0;
-	virtual bool find(string)=0;
+	virtual void find(string)=0;
 	virtual void clique()=0;
 	virtual void compact()=0;
 	virtual void follow(int)=0;

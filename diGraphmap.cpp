@@ -7,8 +7,8 @@ diGraphmap::diGraphmap(){
 }
 
 void diGraphmap::add(string u, string v){
-	nodes[u] = 1;
-	nodes[v] = 1;
+	nodes[u] = true;
+	nodes[v] = true;
 }
 
 bool diGraphmap::find(string s){

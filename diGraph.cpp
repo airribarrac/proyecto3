@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -24,8 +25,10 @@ void diGraph::add(string u,string v){
 		vv=new Node(v,ver.size());
 		ver.push_back(vv);
 	}
-	uu->addIn(vv);
-	vv->addOut(uu);
+	nodes[u]=true;
+	nodes[v]=true;
+	uu->addOut(vv);
+	vv->addIn(uu);
 }
 
 //retorna puntero a nodo que coincide
@@ -151,14 +154,14 @@ void diGraph::compact(){
 			Node *v=(*(u->getOut()))[j];
 			int V=v->getIndex();
 			int vv=indexes[V];
-			matrix[uu][vv]=true;
+			matrix[vv][uu]=true;
 		}
 	}
 	vector<pair<string,string> > edges;
 	for(int i=0;i<x;i++){
 		for(int j=0;j<x;j++){
 			if(matrix[i][j] && i!=j){
-				edges.push_back(make_pair(names[j],names[i]));
+				edges.push_back(make_pair(names[i],names[j]));
 			}
 		}
 	}
@@ -168,17 +171,24 @@ void diGraph::compact(){
 	}
 }
 
-bool diGraph::find(string s){
+void diGraph::find(string s){
+	cout << (find2(s)?"Yes":"No") << endl;
+}
+
+bool diGraph::find1(string s){
 	Node *v=dfs1(s);
-	cout<<(v!=NULL?"Yes":"No")<<endl;
 	return v!=NULL;
+}
+
+bool diGraph::find2(string s){
+	return nodes.count(s)>0;
 }
 
 void diGraph::follow(int n){
 	priority_queue<pair<int,pair<int,string> > > pq;
 	for(int i=0;i<ver.size();i++){
 		Node *a=ver[i];
-		pq.push(make_pair(a->outDeg(),make_pair(-a->inDeg(),a->getName())));
+		pq.push(make_pair(a->inDeg(),make_pair(-a->outDeg(),a->getName())));
 	}
 	for(int i=0;i<n;i++){
 		string str=pq.top().second.second;
