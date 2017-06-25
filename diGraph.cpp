@@ -1,6 +1,7 @@
 #include "diGraph.h"
 #include <queue>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -79,8 +80,89 @@ void diGraph::compact(){
 	cliques.clear();
 	BK(vb(n,false),vb(n,true),vb(n,false));
 	vb visited(n,false);
+	diGraph compacted;
+	vector<vb> vnodes;
+	vector<string> names;
+	vector<int> indexes(n);
+	int x=0;
+	int z=1;				//clique actual
+	vector<int> vindex(n,-1);	//
+	for(int i=0;i<cliques.size();i++){
+		vb cli=set_subst(cliques[i],visited);
+		if(count(cli)<3){		//si quedo un clique muy chico se salta
+			continue;
+		}
+		vnodes.push_back(cli);  //almacenar los nodos virtuales validos
+		visited=set_union(visited,cli);
+		stringstream ss;
+		ss<<"C"<<z++;
+		string vname=ss.str();
+		names.push_back(vname);
+		for(int j=0;j<cli.size();j++){	//marcar nodos del clique con su nombre e indice
+			if(cli[j]){
+				
+				vindex[j]=z-2;
+				indexes[j]=x;
+			}
+		}
+		x++;
+	}
 	
-	//crear grafo auxiliar e imprimirlo con dfs?
+	for(int i=0;i<n;i++){
+		if(visited[i]){
+			continue;
+		}
+		//marcar nodos no visitados con su nombre;
+		names.push_back(ver[i]->getName());
+		indexes[i]=x++;
+	}
+	/*
+	vector<vb> vin(vnodes.size(),vb(n,false));		//aristas entrando a un clique
+	vector<vb> vout(vnodes.size(),vb(n,false));		//aristas saliendo de un clique
+	for(int i=0;i<vnodes.size();i++){		//i-esimo clique
+		for(int j=0;j<n;j++){				//para cada nodo del clique
+			if(!vnodes[i][j]){
+				continue;
+			}
+			Node *aux=ver[j];
+			for(int k=0;k<aux->getOut()->size();k++){
+				Node *sale=(*(aux->getOut()))[k];
+				if(vnodes[i][sale->getIndex()]){	//el que sale esta dentro del clique
+					continue;
+				}
+				vout[i][sale->getIndex()]=true;		//ese nodo sale
+			}
+			for(int k=0;k<aux->getIn()->size();k++){
+				Node *sale=(*(aux->getIn()))[k];
+				if(vnodes[i][sale->getIndex()]){	//el que entra esta dentro del clique
+					continue;
+				}
+				vin[i][sale->getIndex()]=true;		//ese nodo entra
+			}
+		}
+	}*/
+	vector<vb> matrix(x,vb(x,false));	//matriz de adyacencia
+	for(int i=0;i<ver.size();i++){
+		Node *u=ver[i];
+		int U=u->getIndex();
+		int uu=indexes[U];
+		for(int j=0;j<u->getOut()->size();j++){
+			Node *v=(*(u->getOut()))[j];
+			int V=v->getIndex();
+			int vv=indexes[V];
+			matrix[uu][vv]=true;
+		}
+	}
+	vector<pair<string,string> > edges;
+	for(int i=0;i<x;i++){
+		for(int j=0;j<x;j++){
+			if(matrix[i][j] && i!=j){
+				edges.push_back(make_pair(names[j],names[i]));
+			}
+		}
+	}
+	sort(edges);
+	
 }
 
 bool diGraph::find(string s){
@@ -101,7 +183,7 @@ void diGraph::follow(int n){
 		cout<<str<<endl;
 	}
 }
-
+	
 vb diGraph::set_union(vb &a,vb &b){
 	vb res(a.size());
 	for(int i=0;i<a.size();i++){
