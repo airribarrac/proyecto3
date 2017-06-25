@@ -67,11 +67,20 @@ Node* diGraph::dfs2(string u,Node *a,vector<bool> &visited){
 
 void diGraph::clique(){
 	int n=ver.size();
+	cliques.clear();
 	BK(vb(n,false),vb(n,true),vb(n,false));
+	for(int i=0;i<cliques.size();i++){
+		set_print(cliques[i]);
+	}
 }
 
 void diGraph::compact(){
-	cout<<"sin implementar"<<endl;
+	int n=ver.size();
+	cliques.clear();
+	BK(vb(n,false),vb(n,true),vb(n,false));
+	vb visited(n,false);
+	
+	//crear grafo auxiliar e imprimirlo con dfs?
 }
 
 bool diGraph::find(string s){
@@ -143,7 +152,7 @@ int diGraph::count(vb &a){
 	return res;
 }
 
-void diGraph::set_print(vb &a){
+void diGraph::set_print(vb &a){	
 	bool first=true;
 	for(int i=0;i<a.size();i++){
 		if(a[i]){			//nodo i-esimo forma parte del subconjunto
@@ -156,8 +165,8 @@ void diGraph::set_print(vb &a){
 }
 
 void diGraph::BK(vb R,vb P,vb X){
-	if(count(P)==0 && count(X)==0 && count(R)>=3){
-		set_print(R);
+	if(count(P)==0 && count(X)==0){
+		cliques.push_back(R);
 	}
 	for(int i=0;i<P.size();i++){
 		if(P[i]){			// para cada nodo en set P...

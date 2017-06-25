@@ -20,7 +20,6 @@ int main(){
 		}else if(str=="Compact"){
 			g.compact();
 		}else if(str=="Follow"){
-			cout<<"follow: ";
 			int n;
 			cin>>n;
 			g.follow(n);

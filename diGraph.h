@@ -22,6 +22,7 @@ private:
 	Node* dfs1(string);				//retorna nodo con el string
 	Node* dfs2(string,Node*,vector<bool> &visited);
 	vector<Node*> ver;
+	vector<vb> cliques;
 	void BK(vb R,vb P,vb X);
 	vb set_union(vb &a,vb &b);
 	vb set_inter(vb &a,vb &b);
