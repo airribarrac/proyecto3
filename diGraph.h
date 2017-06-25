@@ -27,6 +27,8 @@ private:
 	vb set_inter(vb &a,vb &b);
 	vb set_subst(vb &a,vb &b);
 	vb neighbors(int n);
+	int count(vb &a);
+	void set_print(vb &a);
 };
 
 #endif

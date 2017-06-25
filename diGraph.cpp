@@ -66,7 +66,8 @@ Node* diGraph::dfs2(string u,Node *a,vector<bool> &visited){
 }	
 
 void diGraph::clique(){
-	cout<<"sin implementar"<<endl;
+	int n=ver.size();
+	BK(vb(n,false),vb(n,true),vb(n,false));
 }
 
 void diGraph::compact(){
@@ -132,4 +133,42 @@ vb diGraph::neighbors(int n){
 	return res;
 }
 
-void BK(vb R,vb P,vb X);
+int diGraph::count(vb &a){
+	int res=0;
+	for(int i=0;i<a.size();i++){
+		if(a[i]){
+			res++;
+		}
+	}
+	return res;
+}
+
+void diGraph::set_print(vb &a){
+	bool first=true;
+	for(int i=0;i<a.size();i++){
+		if(a[i]){			//nodo i-esimo forma parte del subconjunto
+			Node *aux=ver[i];
+			cout<<(first?"":" ")<<aux->getName();
+			first=false;
+		}
+	}
+	cout<<endl;
+}
+
+void diGraph::BK(vb R,vb P,vb X){
+	if(count(P)==0 && count(X)==0 && count(R)>=3){
+		set_print(R);
+	}
+	for(int i=0;i<P.size();i++){
+		if(P[i]){			// para cada nodo en set P...
+			vb newR=R;
+			newR[i]=true;
+			vb neigh=neighbors(i);
+			vb newP=set_inter(P,neigh);
+			vb newX=set_inter(X,neigh);
+			BK(newR,newP,newX);
+			P[i]=false;
+			X[i]=true;
+		}
+	}
+}
