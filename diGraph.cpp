@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -161,8 +162,10 @@ void diGraph::compact(){
 			}
 		}
 	}
-	sort(edges);
-	
+	sort(edges.begin(),edges.end());
+	for(int i=0;i<edges.size();i++){
+		cout<<"("<<edges[i].first<<","<<edges[i].second<<")"<<endl;
+	}
 }
 
 bool diGraph::find(string s){
@@ -247,7 +250,7 @@ void diGraph::set_print(vb &a){
 }
 
 void diGraph::BK(vb R,vb P,vb X){
-	if(count(P)==0 && count(X)==0){
+	if(count(P)==0 && count(X)==0 && count(R)>2){
 		cliques.push_back(R);
 	}
 	for(int i=0;i<P.size();i++){
