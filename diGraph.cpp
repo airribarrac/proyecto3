@@ -15,8 +15,17 @@ diGraph::diGraph(){
 
 //agrega arista desde u hasta v
 void diGraph::add(string u,string v){
-	Node *uu=dfs1(u);
-	Node *vv=dfs1(v);
+	Node *uu=NULL;
+	Node *vv=NULL;
+	for(int i=0;i<ver.size();i++){
+		Node *aux=ver[i];
+		if(u==aux->getName()){
+			uu=aux;
+		}
+		if(v==aux->getName()){
+			vv=aux;
+		}
+	}
 	if(uu==NULL){
 		uu=new Node(u,ver.size());
 		ver.push_back(uu);
@@ -154,7 +163,7 @@ void diGraph::compact(){
 			Node *v=(*(u->getOut()))[j];
 			int V=v->getIndex();
 			int vv=indexes[V];
-			matrix[vv][uu]=true;
+			matrix[uu][vv]=true;
 		}
 	}
 	vector<pair<string,string> > edges;
