@@ -1,5 +1,6 @@
 #include "diGraph.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -9,16 +10,20 @@ int main(){
 	cout<<"Ingrese nombre de archivo a leer: ";
 	cin>>fname;
 	ifstream f(fname);
+	while(!f){
+		cout<<"Nombre invalido, ingrese otro: ";
+		cin>>fname;
+		f.open(fname);
+	}
 	string str;
-
 	while(f>>str){
 		if(str=="Add"){
 			string u,v;
-			cin>>u>>v;
+			f>>u>>v;
 			g.add(u,v);
 		}else if(str=="Find"){
 			string u;
-			cin>>u;
+			f>>u;
 			g.find(u);
 		}else if(str=="Clique"){
 			g.clique();
@@ -26,7 +31,7 @@ int main(){
 			g.compact();
 		}else if(str=="Follow"){
 			int n;
-			cin>>n;
+			f>>n;
 			g.follow(n);
 		}
 	}
