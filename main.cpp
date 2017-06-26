@@ -5,8 +5,13 @@ using namespace std;
 
 int main(){
 	diGraph g;
+	string fname;
+	cout<<"Ingrese nombre de archivo a leer: ";
+	cin>>fname;
+	ifstream f(fname);
 	string str;
-	while(cin>>str){
+
+	while(f>>str){
 		if(str=="Add"){
 			string u,v;
 			cin>>u>>v;
